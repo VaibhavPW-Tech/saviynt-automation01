@@ -166,7 +166,7 @@ if check1_mode.startswith("A"):
             c = row["_completion_datetime"]
             if pd.isna(a) or pd.isna(c):
                 return "Failed - Missing date"
-            return "Yes" if a <= c else "Failed - Approval after completion"
+            return "Passed" if a <= c else "Failed - Approval after completion"
 
         df_check1["Check1_Result"] = df_check1.apply(check_approval_before_completion, axis=1)
         df_check1["Check1_Reason"] = df_check1["Check1_Result"]
@@ -319,7 +319,7 @@ else:
 
             # Rule: Approved date must be <= Created date
             if approved_dt <= created_dt:
-                return "Yes", created_dt, sso
+                return "Passed", created_dt, sso
             else:
                 return "Failed - Approved date is after created date", created_dt, sso
 
@@ -701,7 +701,7 @@ if run_check3:
 
         # Role-by-role comparison (multiple roles per user allowed)
         if role in roles_in_sbl:
-            return "Yes"
+            return "Passed"
         else:
             return "Failed - Role not found for this ID in Application File"
 
